@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -8,16 +6,24 @@ public class App {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/swastikc?useSSL=false","root","");
             Statement stmt= con.createStatement();
-            String sql="create table tblStudent(id INT PRIMARY KEY AUTO_INCREMENT,name VARCHAR(50),email VARCHAR(50));";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.executeUpdate();
-            String insertSql="insert into tblStudent(name,email) values(?,?)";
-            PreparedStatement ips= con.prepareStatement(insertSql);
-            ips.setString(1, "Anna Thapa");
-            ips.setString(2, "annat2@gmail.com");
-            ips.executeUpdate();
+           ResultSet rs = stmt.executeQuery("SELECT * FROM emp ORDER BY id");
+          
+            rs.first();
+            System.out.println("First Record:\n Id: "+ rs.getInt("id") +" Name: " + rs.getString("name")+" Salary: " + rs.getDouble("salary") + " Gender: "+ rs.getString("gender"));
+
+            rs.last();
+            System.out.println("Last Record:\n Id: "+ rs.getInt("id") +" Name: " + rs.getString("name")+" Salary: " + rs.getDouble("salary") + " Gender: "+ rs.getString("gender"));
+
+            rs.previous();
+            System.out.println("Previous Record:\n Id: "+ rs.getInt("id") +" Name: " + rs.getString("name")+" Salary: " + rs.getDouble("salary") + " Gender: "+ rs.getString("gender"));
+
+            rs.next();
+            System.out.println("Previous Record:\n Id: "+ rs.getInt("id") +" Name: " + rs.getString("name")+" Salary: " + rs.getDouble("salary") + " Gender: "+ rs.getString("gender"));
+
+            rs.close();
+            stmt.close();
             con.close();
-            System.out.println("Salary updated successfully");
+
         }
         catch(Exception e){
             System.out.println(e.getMessage());
