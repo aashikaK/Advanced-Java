@@ -7,7 +7,7 @@ public class App {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/swastikc?useSSL=false","root","");
-            String updatesql="UPDATE student SET salary = (salary + salary * 0.15) WHERE salary < 2000";
+            String updatesql="UPDATE student SET salary = (salary + salary * 0.15) WHERE salary < 20000";
             PreparedStatement ps = con.prepareStatement(updatesql);
             ps.executeUpdate();
             con.close();
